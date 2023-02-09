@@ -6,20 +6,21 @@ def lintchecks () {
     sh "echo lint checks"
 }
 
-pipeline {
-    agent any
-    stages {
-        stage('Lint Checks') {
-            steps {
-                script {
-                    lintchecks()
+def call () {
+    pipeline {
+        agent any
+        stages {
+            stage('Lint Checks') {
+                steps {
+                    script {
+                        lintchecks()
+                    }
                 }
-
             }
-        }
-        stage ('Downloading the dependencies'){
-            steps {
-                sh "npm install"
+            stage ('Downloading the dependencies'){
+                steps {
+                    sh "npm install"
+                }
             }
         }
     }
