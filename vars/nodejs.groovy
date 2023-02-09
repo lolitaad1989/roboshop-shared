@@ -3,7 +3,7 @@ def lintchecks () {
     sh "npm install jslint"
     sh "ls -ltr node_modules/jslint/bin"
     //sh "./node_modules/jslint/bin/jslint.js server.js"
-    sh "echo lint checks"
+    sh "echo lint checks are completed for ${COMPONENT}"
 }
 
 def call () {
@@ -13,7 +13,7 @@ def call () {
             stage('Lint Checks') {
                 steps {
                     script {
-                        lintchecks()
+                        lintchecks(COMPONENT)
                     }
                 }
             }
