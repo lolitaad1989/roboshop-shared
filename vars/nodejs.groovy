@@ -6,7 +6,7 @@ def lintchecks () {
     sh "echo lint checks are completed for ${COMPONENT}"
 }
 
-def call () {
+def call (COMPONENT) {
     pipeline {
         agent any
         stages {
