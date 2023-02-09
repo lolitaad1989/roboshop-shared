@@ -1,4 +1,4 @@
-def lintchecks () {
+def lintchecks (COMPONENT) {
     sh "echo Installing JSlint"
     sh "npm install jslint"
     sh "ls -ltr node_modules/jslint/bin"
@@ -6,7 +6,8 @@ def lintchecks () {
     sh "echo lint checks are completed for ${COMPONENT}"
 }
 
-def call (COMPONENT) {
+def call (COMPONENT) 
+{
     pipeline {
         agent any
         stages {
