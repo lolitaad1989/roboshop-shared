@@ -6,6 +6,11 @@ def lintchecks (COMPONENT) {
     sh "echo lint checks are completed for ${COMPONENT}"
 }
 
+def sonarChecks (COMPONENT) {
+    sh "Starting Sonar Checks"
+    sonar-scanner -Dsonar.host.url=http://172.31.5.228:9000 -Dsonar.sources=. -Dsonar.projectKey=catalogue -Dsonar.login=admin -Dsonar.password=password
+    sh "echo sonar checks are completed for ${COMPONENT}"
+}
 def call (COMPONENT) 
 {
     pipeline {
@@ -15,6 +20,13 @@ def call (COMPONENT)
                 steps {
                     script {
                         lintchecks(COMPONENT)
+                    }
+                }
+            }
+            stage('Sonar Checks') {
+                steps {
+                    script {
+                        sonarChecks(COMPONENT)
                     }
                 }
             }

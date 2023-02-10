@@ -6,6 +6,8 @@ def lintchecks (COMPONENT) {
     sh "echo lint checks are completed for ${COMPONENT}"
 }
 
+
+
 def call (COMPONENT) 
 {
     pipeline {
@@ -15,6 +17,13 @@ def call (COMPONENT)
                 steps {
                     script {
                         lintchecks(COMPONENT)
+                    }
+                }
+            }
+            stage('Sonar Checks') {
+                steps {
+                    script {
+                        sonarChecks(COMPONENT)
                     }
                 }
             }
