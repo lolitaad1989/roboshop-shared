@@ -9,7 +9,7 @@ def lintchecks (COMPONENT) {
 def sonarChecks (COMPONENT) {
     sh "echo Starting Sonar Checks"
     sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > quality-gata.sh"
-    sh "bash -x quality-gata.sh ${SONAR_USR} ${SONAR_PSW} ${SONAR_URL} ${COMPONENT}"
+    sh "bash -x quality-gate.sh ${SONAR_USR} ${SONAR_PSW} ${SONAR_URL} ${COMPONENT}"
     sh "echo sonar checks are completed for ${COMPONENT}"
 }
 
