@@ -14,7 +14,7 @@ def sonarChecks (COMPONENT) {
 def call (COMPONENT) 
 {
     pipeline {
-        agent any
+        agent ANSIBLE
         environment {
             SONAR = credentials('SONAR')
             SONAR_URL = "172.31.5.228"
