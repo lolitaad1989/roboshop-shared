@@ -14,7 +14,7 @@ def sonarChecks (COMPONENT) {
 def call (COMPONENT) 
 {
     pipeline {
-        agent jenkinsagent
+        agent {jenkinsagent}
         environment {
             SONAR = credentials('SONAR')
             SONAR_URL = "172.31.5.228"
