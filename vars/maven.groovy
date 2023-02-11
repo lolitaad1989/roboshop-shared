@@ -18,15 +18,15 @@ def call (COMPONENT)
             stage('Lint Checks') {
                 steps {
                     script {
-                        lintchecks(COMPONENT)
+                        common.lintchecks(COMPONENT)
                     }
                 }
             }
             stage('Sonar Checks') {
                 steps {
                     script {
-                        env.ARGS="-Dsonar.java.binaries=target/"
-                        sh mvn clean complile
+                       // env.ARGS="-Dsonar.java.binaries=target/"
+                        //sh mvn clean complile
                         common.sonarChecks(COMPONENT) 
                     }
                 }
