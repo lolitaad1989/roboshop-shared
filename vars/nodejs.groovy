@@ -26,7 +26,7 @@ def call (COMPONENT)
                     }
                 }
             }
-                        stage('test cases') {
+            stage('test cases') {
                 steps {
                     parallel {
                         stage('unit test') {
