@@ -6,12 +6,7 @@ def lintchecks (COMPONENT) {
     sh "echo lint checks are completed for ${COMPONENT}"
 }
 
-def sonarChecks (COMPONENT) {
-    sh "echo Starting Sonar Checks"
-    sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate > quality-gata.sh"
-    sh "bash -x sonar-quality-gate.sh ${SONAR_USR} ${SONAR_PSW} ${SONAR_URL} ${COMPONENT}"
-    sh "echo sonar checks are completed for ${COMPONENT}"
-}
+
 
 def call (COMPONENT) 
 {
@@ -32,6 +27,8 @@ def call (COMPONENT)
             stage('Sonar Checks') {
                 steps {
                     script {
+                        env.ARGS="-Dsonar.sources=."
+                        common.sonarChecks(COMPONENT)
                         sonarChecks(COMPONENT)
                     }
                 }
