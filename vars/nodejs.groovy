@@ -48,6 +48,7 @@ def call (COMPONENT)
                 }
             }
             stage ('Downloading the dependencies'){
+                when { expression { env.TAG_NAME != null } } 
                 steps {
                     sh "echo to install npm"
                    // sh "npm install"

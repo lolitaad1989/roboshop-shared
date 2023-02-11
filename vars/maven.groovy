@@ -53,8 +53,15 @@ def call (COMPONENT)
                 }
             }
             stage ('Downloading the dependencies'){
+                when { expression { env.TAG_NAME != null } } 
                 steps {
                     sh "mvn clean package"
+                }
+            }
+            stage ('uploading the articrafts') {
+                when { expression { env.TAG_NAME != null } } 
+                steps {
+                    sh "echo uploading the articrafts"
                 }
             }
         }
