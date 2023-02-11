@@ -28,8 +28,8 @@ def call (COMPONENT)
                 steps {
                     script {
                         env.ARGS="-Dsonar.java.binaries=target/"
-                        common.sonarChecks(COMPONENT)
                         sh mvn clean complile
+                        common.sonarChecks(COMPONENT) 
                     }
                 }
             }
