@@ -27,22 +27,20 @@ def call (COMPONENT)
                 }
             }
             stage('test cases') {
-                steps {
-                    parallel {
-                        stage('unit test') {
-                            steps {
-                                sh "echo unit testing..."
-                            }
+                parallel {
+                    stage('unit test') {
+                        steps {
+                            sh "echo unit testing..."
                         }
-                        stage('Integration test') {
-                            steps {
-                                sh "echo integration testing..."
-                            }   
-                        }
-                        stage('Functional test') {
-                            steps {
-                                sh "echo functional testing"
-                            }
+                    }
+                    stage('Integration test') {
+                        steps {
+                            sh "echo integration testing..."
+                        }   
+                    }
+                    stage('Functional test') {
+                        steps {
+                            sh "echo functional testing"
                         }
                     }
                 }
