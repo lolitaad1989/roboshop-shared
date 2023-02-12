@@ -10,6 +10,7 @@ def call (COMPONENT)
             SONAR = credentials('SONAR')
             NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.5.228"
+            NEXUS_URL = "172.31.7.10"
         }
         stages {
             stage('Lint Checks') {
@@ -59,6 +60,7 @@ def call (COMPONENT)
                 when { expression { env.TAG_NAME != null } } 
                 steps {
                     sh "echo uploading the articrafts"
+                    sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                 }
             }
         }
