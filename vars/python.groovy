@@ -68,7 +68,8 @@ def call (COMPONENT)
                 steps {
                     sh "echo to install npm"
                     sh "npm install"
-                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt"
+                    
                     sh "ls -ltr"
                 }
             }
