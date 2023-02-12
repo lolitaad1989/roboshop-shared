@@ -52,6 +52,12 @@ def call (COMPONENT)
                    // sh "npm install"
                 }
             }
+            stage ('uploading the articrafts') {
+                when { expression { env.TAG_NAME != null } } 
+                steps {
+                    sh "echo uploading the articrafts"
+                }
+            }
         }
     }
 }
