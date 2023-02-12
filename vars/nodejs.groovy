@@ -47,8 +47,20 @@ def call (COMPONENT)
                     }
                 }
             }
+
+            stage('Artifact validation on Nexus') {
+                steps {
+                    sh "echo Checking whether artifact exists or not. If it doesnt exist then only proceed with preparation and upload"
+                    script {
+                        env.UPLOAD_STATUS=sh(returnStdout; true, script: "curl -L -s http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true ")
+                    }
+                }
+            }
             stage ('Downloading the dependencies'){
-                when { expression { env.TAG_NAME != null } } 
+                when { 
+                    expression { env.TAG_NAME != null } 
+                    expression { env.UPLOAD_STATUS == "" }
+                } 
                 steps {
                     sh "echo to install npm"
                     sh "npm install"
