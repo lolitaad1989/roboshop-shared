@@ -8,6 +8,7 @@ def call (COMPONENT)
         agent any
         environment {
             SONAR = credentials('SONAR')
+            NEXUS = credentials('NEXUS')
             SONAR_URL = "172.31.5.228"
         }
         stages {
@@ -49,7 +50,9 @@ def call (COMPONENT)
                 when { expression { env.TAG_NAME != null } } 
                 steps {
                     sh "echo to install npm"
-                   // sh "npm install"
+                    sh "npm install"
+                    sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                    sh "ls -ltr"
                 }
             }
             stage ('uploading the articrafts') {
