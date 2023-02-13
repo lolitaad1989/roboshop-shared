@@ -49,10 +49,14 @@ def call (COMPONENT)
             }
 
             stage('Artifact validation on Nexus') {
+                when { 
+                    expression { env.TAG_NAME != null } 
+                } 
                 steps {
                     sh "echo Checking whether artifact exists or not. If it doesnt exist then only proceed with preparation and upload"
                     script {
                         env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl -L -s http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true ")
+                        print UPLOAD_STATUS
                     }
                 }
             }
