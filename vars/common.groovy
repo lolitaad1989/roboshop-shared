@@ -57,3 +57,52 @@ def testCases() {
                 },
         )
     }
+
+    def artifacts() {
+       if(env.TAG_NAME != null) {
+              stage('Artifact Validation On Nexus') {
+                     sh "echo checking whether artifact exists of not. If it doesnt exist then only proceed with Preparation and Upload"
+                     env.UPLOAD_STATUS=sh(returnStdout: true, script: "curl -L -s http://172.31.7.10:8081/service/rest/repository/browse/${COMPONENT} | grep ${COMPONENT}-${TAG_NAME}.zip || true" )
+              }
+
+       if(env.UPLOAD_STATUS == "") {
+              stage('Preparing the artifacts') {
+                     if(env.APP == "maven") {
+                            sh ''' 
+                                   mvn clean package
+                                   mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar
+                                   zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar
+                            '''
+                     }
+                     else if(env.APP == "nodejs") {
+                            sh ''' 
+                                   npm install
+                                   zip -r ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+                            '''
+                     }
+                     else if(env.APP == "python") {
+                            sh ''' 
+                                   zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt
+                            '''
+                     }
+                     else if(env.APP == "angularjs") {
+                            sh ''' 
+                                   cd static
+                                   zip -r ../${COMPONENT}-${TAG_NAME}.zip *
+                            '''
+                     }
+                     else {
+                            sh ''' 
+                                   echo "Golang is your task"
+                            '''
+                     }
+              }
+              
+              stage('Uploading Artifacts') {
+                     withCredentials([usernamePassword(credentialsId: 'NEXUS', passwordVariable: 'NEXUS_PSW', usernameVariable: 'NEXUS_USR')]) {
+                            sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.7.10:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                            }
+                     }
+              }
+       }
+} 
