@@ -72,7 +72,7 @@ def call (COMPONENT)
                 steps {
                     sh "hostname"
                     sh "mvn clean package"
-                    sh "mv /shipping/target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
+                    sh "mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
                     sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
                     sh "ls -ltr"
                 }
