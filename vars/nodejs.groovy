@@ -74,8 +74,8 @@ def call (COMPONENT)
                     expression { env.UPLOAD_STATUS == "" }
                 } 
                 steps {
-                    sh "echo uploading the articrafts"
                     sh "curl -f -v -u ${NEXUS_USR}:${NEXUS_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "echo uploading the articrafts"
                 }
             }
         }
