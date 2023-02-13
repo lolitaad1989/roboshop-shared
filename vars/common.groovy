@@ -8,7 +8,7 @@ def sonarChecks (COMPONENT) {
     }
 }
 
-def lintchecks () {
+def lintChecks () {
     stage('Lint checks') {
         if(env.APP == "maven") {
             sh "echo Installing mvn"
@@ -29,11 +29,31 @@ def lintchecks () {
             // sh pylist filename.py
             sh "echo lint checks completed for ${COMPONENT}.....!!!!!"      
         }
-           else if(env.APP == "angularjs") {
-                     sh "echo lint checks completed for ${COMPONENT}.....!!!!!"        
-          }
-          else {
-                     sh "echo performing generic lint cheks"
-              }
+        else if(env.APP == "angularjs") {
+            sh "echo lint checks completed for ${COMPONENT}.....!!!!!"        
+        }
+        else {
+        sh "echo performing generic lint cheks"
+        }
     }
 }
+
+def testCases() {
+    parallel(                                                        // This is how we write stages in parallel.
+            "UNIT": {
+                    stage('Unit Tests'){
+                            sh "echo Unit Testing ......."                            
+                    }
+                },
+            "INTEGRATION": {
+                    stage('Integration Tests'){
+                            sh "echo Integration Testing ......."                          
+                    }
+                },
+            "FUNCTIONAL": {
+                    stage('Functional Tests'){
+                            sh "echo Functional Testing ......."                          
+                    }
+                },
+        )
+    }
