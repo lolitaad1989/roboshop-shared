@@ -1,11 +1,17 @@
 
-def call () {
-    node {
-        env.APP="maven"
+def call() {
+     node {
+        sh "rm -rf *"
+        git branch: 'main', url: "git branch: 'main', url: 'https://github.com/lolitaad1989/${COMPONENT}.git'"
+        env.APP = "maven"
         common.lintChecks()
+        sh "ls -ltr"
+        sh "mvn clean compile"
         env.ARGS="-Dsonar.java.binaries=target/"
-        common.sonarChecks(COMPONENT)
-    }
+        common.sonarChecks() 
+        common.testCases() 
+        common.artifacts()
+    }   
 }
 
 
