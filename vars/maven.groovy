@@ -70,7 +70,7 @@ def call (COMPONENT)
                     expression { env.UPLOAD_STATUS == "" }
                 } 
                 steps {
-                    sh "echo $hostname"
+                    sh "hostname"
                     sh "mvn clean package"
                     sh "mv /shipping/target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
                     sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
