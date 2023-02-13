@@ -1,10 +1,14 @@
 
-def call () {
+def call() {
     node {
-        env.APP = "nodejs"
+        sh "rm -rf *"
+        git branch: 'main', url: "git branch: 'main', url: 'https://github.com/lolitaad1989/${COMPONENT}.git'"
+        env.APP = "python"
         common.lintChecks()
-        env.ARGS = "-Dsonar.sources=."
-        common.sonarChecks()
+        env.ARGS="-Dsonar.sources=."
+        common.sonarChecks()  
+        common.testCases() 
+        common.artifacts()
     }
 }
 
