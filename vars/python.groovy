@@ -1,9 +1,10 @@
 
 def call () {
     node {
-        env.APP = "nodejs"
-        lintChecks()
-        env.ARGS
+        env.APP = "python"
+        common.lintChecks()
+        env.ARGS = "-Dsonar.sources=."
+        common.sonarChecks()
     }
 }
 
